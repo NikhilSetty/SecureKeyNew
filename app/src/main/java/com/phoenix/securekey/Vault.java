@@ -4,8 +4,19 @@ package com.phoenix.securekey;
  * Created by anujkumars on 9/12/2015.
  */
 public class Vault {
+
     String Name;
     int keyNumber;
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public Vault()
     {

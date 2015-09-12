@@ -24,7 +24,6 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        insertdata();
         readfromvault();
         getKeyValues();
     }
@@ -59,18 +58,6 @@ public class MainActivity extends ActionBarActivity {
         }
         return vaultlist;
     }
-
-    public void insertdata(){
-        ContentValues values= new ContentValues();
-        values.put(DbTableStrings.USERNAME,"admin");
-        values.put(DbTableStrings.PASSWORD,"admin");
-        //values.put(DbTableStrings.VAULT_ID,"2");
-
-        Uri uri = getContentResolver().insert(Uri.parse(DbTableStrings.AUTH_URI),values);
-        Toast.makeText(getBaseContext(), "New record inserted" + uri.toString(), Toast.LENGTH_LONG)
-                .show();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

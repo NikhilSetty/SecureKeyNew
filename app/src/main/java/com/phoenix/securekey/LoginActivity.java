@@ -1,6 +1,7 @@
 package com.phoenix.securekey;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         signupButton=(TextView)findViewById(R.id.link_signup);
         signupButton.setClickable(true);
 
-
+        insertdata();
 
         SharedPreferences prefs = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
 
@@ -68,6 +69,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void insertdata(){
+        ContentValues values= new ContentValues();
+        values.put(DbTableStrings.USERNAME,"admin");
+        values.put(DbTableStrings.PASSWORD, "1234");
+        //values.put(DbTableStrings.VAULT_ID,"2");
+
+        Uri uri = getContentResolver().insert(Uri.parse(DbTableStrings.AUTH_URI), values);
+        Toast.makeText(getBaseContext(), "New record inserted" + uri.toString(), Toast.LENGTH_LONG)
+                .show();
     }
 
     private void registerInBackground(final String UserName, final String UserPassword) {

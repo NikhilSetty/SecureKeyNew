@@ -4,6 +4,7 @@ package com.phoenix.securekey;
  * Created by anujkumars on 9/12/2015.
  */
 public class KeyValue {
+
     String name;
     String value;
     int vaultId;
