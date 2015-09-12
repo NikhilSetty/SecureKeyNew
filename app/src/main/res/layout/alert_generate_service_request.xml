@@ -8,7 +8,6 @@
         android:layout_height="wrap_content"
         android:text="Choose Date"
         android:textColor="#FFF"
-        android:onClick="showDatePickerDialog"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="33dp"
