@@ -1,4 +1,4 @@
-package com.phoenix.securekey.securekey;
+package com.phoenix.securekey;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
