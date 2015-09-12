@@ -45,12 +45,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public ArrayList readfromvault() {
-        vaultlist=new ArrayList<>();
+        vaultlist = new ArrayList<>();
         ContentResolver contentResolver=getContentResolver();
         Cursor cursor=contentResolver.query(Uri.parse(DbTableStrings.VAULT_URI),null,null,null,null);
         if(cursor.moveToFirst()){
             while(cursor.moveToNext()) {
-                Vault vault=new Vault();
+                Vault vault = new Vault();
                 vault.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_NAME)));
                 vault.setKeyNumber(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_ID))));
                 vaultlist.add(vault);
@@ -60,15 +60,14 @@ public class MainActivity extends ActionBarActivity {
         return vaultlist;
     }
 
-
     public void insertdata(){
         ContentValues values= new ContentValues();
-        values.put(DbTableStrings.USERNAME,"MainActivity");
-        values.put(DbTableStrings.PASSWORD,"val2");
+        values.put(DbTableStrings.USERNAME,"admin");
+        values.put(DbTableStrings.PASSWORD,"admin");
         //values.put(DbTableStrings.VAULT_ID,"2");
 
         Uri uri = getContentResolver().insert(Uri.parse(DbTableStrings.AUTH_URI),values);
-        Toast.makeText(getBaseContext(), "New record inserted"+uri.toString(), Toast.LENGTH_LONG)
+        Toast.makeText(getBaseContext(), "New record inserted" + uri.toString(), Toast.LENGTH_LONG)
                 .show();
     }
 

@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by nravishankar on 9/12/2015.
  */
@@ -188,6 +190,7 @@ public class SecureKey extends InputMethodService
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
+                        List<UserModel> userList = DbHandler.readfromvault(getApplicationContext());
                         Toast.makeText(getApplicationContext(), "Login Successfull!", Toast.LENGTH_SHORT).show();
                         AddKey();
                     }
