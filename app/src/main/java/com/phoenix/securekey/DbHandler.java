@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DbHandler {
 
-    public static List<UserModel> readfromvault(Context context) {
+    public static List<UserModel> readUserData(Context context) {
         List<UserModel> userList = new ArrayList<>();
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.AUTH_URI),null,null,null,null);
@@ -31,17 +31,17 @@ public class DbHandler {
         return userList;
     }
 
-    public static List<Vault> readAll(Context context){
+    public static List<Vault> readfromvault(Context context){
         List<Vault> vaultList = new ArrayList<>();
         ContentResolver contentResolver = context.getContentResolver();
-        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.AUTH_URI),null,null,null,null);
+        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.VAULT_URI),null,null,null,null);
         if(cursor.moveToFirst()){
-            while(cursor.moveToNext()) {
+            do{
                 Vault vault = new Vault();
+                vault.setId(cursor.getInt(cursor.getColumnIndex("_id")));
                 vault.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_NAME)));
-                vault.setId(cursor.getInt(cursor.getColumnIndex(DbTableStrings.VAULT_ID)));
                 vaultList.add(vault);
-            }
+            }while(cursor.moveToNext());
 
         }
         cursor.close();

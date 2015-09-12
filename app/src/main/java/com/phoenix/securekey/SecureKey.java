@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -190,7 +189,7 @@ public class SecureKey extends InputMethodService
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        List<UserModel> userList = DbHandler.readfromvault(getApplicationContext());
+                        List<UserModel> userList = DbHandler.readUserData(getApplicationContext());
                         if(userList.get(0).UserName.equals("admin")){
                             String enteredPassword = input.getText().toString();
                             if(!enteredPassword.equals("") && enteredPassword.equals(Long.toString(userList.get(0).Password))){
@@ -237,8 +236,14 @@ public class SecureKey extends InputMethodService
 
 
         final ListView listView = (ListView) promptsView.findViewById(R.id.listViewList);
-        String[] vaults = new String[]{"Hello", "How", "are", "you"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.plain_text_list_item, vaults );
+
+        final List<Vault> vaults = DbHandler.readfromvault(getApplicationContext());
+        String[] VaultNames = new String[vaults.size()];
+        for(int i = 0; i < vaults.size(); i++){
+            VaultNames[i] = vaults.get(i).Name;
+        }
+        /*String[] vaults = new String[]{"Hello", "How", "are", "you"};*/
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.plain_text_list_item, VaultNames );
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -246,7 +251,9 @@ public class SecureKey extends InputMethodService
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "You have clicked :" + item, Toast.LENGTH_LONG).show();
+                Vault selectedVault = vaults.get(position);
+
+                Toast.makeText(getApplicationContext(), "You have clicked :" + selectedVault.Name, Toast.LENGTH_LONG).show();
                 String[] vaults = new String[]{"New", "Set", "Of", "Strings"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.plain_text_list_item, vaults );
                 listView.setAdapter(adapter);

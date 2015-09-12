@@ -78,8 +78,12 @@ public class LoginActivity extends AppCompatActivity {
         //values.put(DbTableStrings.VAULT_ID,"2");
 
         Uri uri = getContentResolver().insert(Uri.parse(DbTableStrings.AUTH_URI), values);
-        Toast.makeText(getBaseContext(), "New record inserted" + uri.toString(), Toast.LENGTH_LONG)
-                .show();
+
+        values = new ContentValues();
+        values.put(DbTableStrings.VAULT_NAME, "Coke");
+        Uri uri2 = getContentResolver().insert(Uri.parse(DbTableStrings.VAULT_URI), values);
+        Toast.makeText(getApplicationContext(), "New record inserted" + uri2.toString(), Toast.LENGTH_LONG).show();
+
     }
 
     private void registerInBackground(final String UserName, final String UserPassword) {

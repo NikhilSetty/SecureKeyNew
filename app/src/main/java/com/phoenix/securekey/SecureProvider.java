@@ -111,6 +111,7 @@ public class SecureProvider extends ContentProvider {
                 break;
             case DbTableStrings.VAULT_URI:
                 queryBuilder.setTables(DbTableStrings.TABLE_NAME_VAULT);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
 
@@ -148,10 +149,11 @@ public class SecureProvider extends ContentProvider {
                         null, values);
                 break;
             case DbTableStrings.AUTH_URI:
-                id= database.insert(DbTableStrings.TABLE_NAME_AUTHENTICATION,null,values);
+                id = database.insert(DbTableStrings.TABLE_NAME_AUTHENTICATION,null,values);
                 break;
             case DbTableStrings.VAULT_URI:
                 id = database.insert(DbTableStrings.TABLE_NAME_VAULT,null,values);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
