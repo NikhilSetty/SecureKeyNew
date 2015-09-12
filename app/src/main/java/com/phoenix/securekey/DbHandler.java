@@ -40,6 +40,8 @@ public class DbHandler {
                 Vault vault = new Vault();
                 vault.setId(cursor.getInt(cursor.getColumnIndex("_id")));
                 vault.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_NAME)));
+                vault.setPasscode(cursor.getLong(cursor.getColumnIndex(DbTableStrings.VAULT_PASSWORD)));
+                vault.setIsSecure(cursor.getInt(cursor.getColumnIndex(DbTableStrings.IS_SECURE)));
                 vaultList.add(vault);
             }while(cursor.moveToNext());
 
@@ -47,5 +49,24 @@ public class DbHandler {
         cursor.close();
 
         return vaultList;
+    }
+
+    public static List<KeyValue> getAllPairs(Context context){
+        List<KeyValue> kvList = new ArrayList<>();
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.DATA_URI),null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                KeyValue kv = new KeyValue();
+                kv.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.KEY)));
+                kv.setValue(cursor.getString(cursor.getColumnIndex(DbTableStrings.VALUE)));
+                kv.setVaultId(cursor.getInt(cursor.getColumnIndex(DbTableStrings.VAULT_ID)));
+                kvList.add(kv);
+            }while(cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return kvList;
     }
 }

@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.Key;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,8 +83,29 @@ public class LoginActivity extends AppCompatActivity {
 
         values = new ContentValues();
         values.put(DbTableStrings.VAULT_NAME, "Coke");
+        values.put(DbTableStrings.VAULT_PASSWORD, "1234");
+        values.put(DbTableStrings.IS_SECURE, 1);
         Uri uri2 = getContentResolver().insert(Uri.parse(DbTableStrings.VAULT_URI), values);
-        Toast.makeText(getApplicationContext(), "New record inserted" + uri2.toString(), Toast.LENGTH_LONG).show();
+
+        values = new ContentValues();
+        values.put(DbTableStrings.VAULT_NAME, "Pepsi");
+        values.put(DbTableStrings.VAULT_PASSWORD, "1234");
+        values.put(DbTableStrings.IS_SECURE, 0);
+        Uri uri5 = getContentResolver().insert(Uri.parse(DbTableStrings.VAULT_URI), values);
+
+        values = new ContentValues();
+        values.put(DbTableStrings.VAULT_NAME, "Fanta");
+        values.put(DbTableStrings.VAULT_PASSWORD, "5678");
+        values.put(DbTableStrings.IS_SECURE, 1);
+        Uri uri6 = getContentResolver().insert(Uri.parse(DbTableStrings.VAULT_URI), values);
+
+        values = new ContentValues();
+        values.put(DbTableStrings.KEY, "CardNumber");
+        values.put(DbTableStrings.VALUE, "123456789");
+        values.put(DbTableStrings.VAULT_ID, "1");
+        Uri uri3 = getContentResolver().insert(Uri.parse(DbTableStrings.DATA_URI), values);
+
+        Toast.makeText(getApplicationContext(), "New record inserted" + uri3.toString(), Toast.LENGTH_LONG).show();
 
     }
 

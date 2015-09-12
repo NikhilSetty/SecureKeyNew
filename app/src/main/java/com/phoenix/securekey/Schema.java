@@ -12,7 +12,8 @@ public class Schema {
     public static final String CREATE_VAULT = "create table if not exists " + DbTableStrings.TABLE_NAME_VAULT +
             "( _id integer primary key autoincrement, "
             + DbTableStrings.VAULT_NAME + " string, "
-            + DbTableStrings.isSecure + " boolean) ";
+            + DbTableStrings.VAULT_PASSWORD + " string, "
+            + DbTableStrings.IS_SECURE + " int) ";
 
     public static final String CREATE_DATA_TABLE = "create table if not exists " + DbTableStrings.TABLE_NAME_DATA +
             "( _id integer primary key autoincrement, "

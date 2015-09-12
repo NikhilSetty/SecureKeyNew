@@ -22,8 +22,9 @@ public class DbTableStrings {
     public static final String KEY = "key";
     public static final String VALUE = "value";
     public static final String VAULT_ID = "vault_id";
-    public static final String USERNAME="username";
-    public static final String PASSWORD="password";
-    public static final String VAULT_NAME="vault_name";
-    public static final boolean isSecure=false;
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+    public static final String VAULT_NAME = "vault_name";
+    public static final String VAULT_PASSWORD = "vault_password";
+    public static final String IS_SECURE = "isSecure";
 }

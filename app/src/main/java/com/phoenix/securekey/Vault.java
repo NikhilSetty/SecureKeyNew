@@ -8,6 +8,26 @@ public class Vault {
     String Name;
     int keyNumber;
     int id;
+    long passcode;
+    int isSecure;
+
+    public long getPasscode() {
+        return passcode;
+    }
+
+    public void setPasscode(long passcode) {
+        this.passcode = passcode;
+    }
+
+
+    public int getIsSecure() {
+        return isSecure;
+    }
+
+    public void setIsSecure(int isSecure) {
+        this.isSecure = isSecure;
+    }
+
 
     public int getId() {
         return id;
