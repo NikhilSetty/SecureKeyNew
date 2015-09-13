@@ -51,7 +51,7 @@ public class VaultListAdapter extends BaseAdapter {
         name.setText(String.valueOf(VaultList.get(position).getName()));
         keys.setText(String.valueOf(VaultList.get(position).getKeyNumber()));
         ImageView icon=(ImageView)convertView.findViewById(R.id.vault_icon);
-        icon.setImageResource(R.drawable.icon_paper);
+        icon.setImageResource(R.drawable.icon_vault);
         return convertView;
 
     }
