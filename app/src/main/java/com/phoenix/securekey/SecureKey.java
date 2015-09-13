@@ -72,6 +72,9 @@ public class SecureKey extends InputMethodService
             case -44:
                 NewTest();
                 break;
+            case -50:
+                NewTest();
+                break;
             default:
                 char code = (char)primaryCode;
                 if(Character.isLetter(code) && caps){
@@ -83,7 +86,7 @@ public class SecureKey extends InputMethodService
 
     private void NewTest() {
         pavan = true;
-        RelativeLayout v = (RelativeLayout) getLayoutInflater().inflate(R.layout.alert_generate_service_request, null);
+        RelativeLayout v = (RelativeLayout) getLayoutInflater().inflate(R.layout.image_layout, null);
         setInputView(v);
     }
 
@@ -190,16 +193,13 @@ public class SecureKey extends InputMethodService
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        List<UserModel> userList = DbHandler.readUserData(getApplicationContext());
-                            if (userList.get(0).UserName.equals("admin")) {
                                 String enteredPassword = input.getText().toString();
-                                if (!enteredPassword.equals("") && enteredPassword.equals(Long.toString(userList.get(0).Password))) {
+                                if (!enteredPassword.equals("") && enteredPassword.equals(Long.toString(1234))) {
                                     Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
                                     AddKey();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Login Failed, Try Again!", Toast.LENGTH_SHORT).show();
                                 }
-                            }
                         }
                     }
                 );

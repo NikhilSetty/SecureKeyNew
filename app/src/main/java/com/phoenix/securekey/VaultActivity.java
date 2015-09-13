@@ -34,9 +34,13 @@ public class VaultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vault);
 
         mListView = (ListView) findViewById(R.id.activity_vault_list_view);
-        vaultList=new ArrayList<>();
+        PopulateListView();
+    }
 
-       vaultList=DbHandler.readfromvaultwithKeyNumber(getApplicationContext());
+    public void PopulateListView(){
+        vaultList = new ArrayList<>();
+
+        vaultList = DbHandler.readfromvaultwithKeyNumber(getApplicationContext());
 
         mAdapter = new VaultListAdapter(this, vaultList);
         mListView.setAdapter(mAdapter);
@@ -46,8 +50,6 @@ public class VaultActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(), "Item clicked " + position, Toast.LENGTH_SHORT).show();
 
                 final Vault vault = vaultList.get(position);
 
@@ -125,6 +127,6 @@ public class VaultActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mAdapter.notifyDataSetInvalidated();
+        PopulateListView();
     }
 }

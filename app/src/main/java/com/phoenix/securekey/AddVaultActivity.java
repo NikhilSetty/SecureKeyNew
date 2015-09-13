@@ -66,12 +66,8 @@ public class AddVaultActivity extends AppCompatActivity {
                             vault.setPasscode(vaultPin);
                             vault.setIsSecure(1);
                             DbHandler.insertVault(getApplicationContext(), vault);
-                            Intent intent = new Intent(AddVaultActivity.this, VaultActivity.class);
-                            startActivity(intent);
                             finish();
                         }
-                        Toast.makeText(getApplicationContext(), "Please Enter Pin", Toast.LENGTH_SHORT).show();
-
                     }
                     else {
                        vault.setPasscode(0);
