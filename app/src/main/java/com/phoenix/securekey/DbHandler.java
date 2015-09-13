@@ -71,6 +71,26 @@ public class DbHandler {
         return kvList;
     }
 
+    public static List<KeyValue> getPairsByvaultId(Context context,int vaultId){
+        List<KeyValue> kvList = new ArrayList<>();
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.DATA_URI), null ,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                KeyValue kv = new KeyValue();
+                kv.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.KEY)));
+                kv.setValue(cursor.getString(cursor.getColumnIndex(DbTableStrings.VALUE)));
+                kv.setVaultId(cursor.getInt(cursor.getColumnIndex(DbTableStrings.VAULT_ID)));
+                if(kv.getVaultId()==vaultId)
+                kvList.add(kv);
+            }while(cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return kvList;
+    }
+
     public static void insertUser(Context context,UserModel model){
         ContentResolver contentResolver = context.getContentResolver();
         ContentValues contentValues = new ContentValues();

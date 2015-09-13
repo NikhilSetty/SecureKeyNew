@@ -39,7 +39,7 @@ public class KeyValueActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.activity_vault_list_view);
         list2=(ListView)findViewById(R.id.list1);
         keyList=new ArrayList<>();
-        keyList=DbHandler.getAllPairs(getApplicationContext());
+        keyList=DbHandler.getPairsByvaultId(getApplicationContext(),vaultId);
 
         List<String> kList=new ArrayList<>();
         int i=0;
