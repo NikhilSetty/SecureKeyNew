@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         signupButton=(TextView)findViewById(R.id.link_signup);
         signupButton.setClickable(true);
 
-        insertdata();
+        //insertdata();
 
         SharedPreferences prefs = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
 
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(LoginActivity.this, VaultActivity.class);
                 startActivity(intent);
+                finish();
 
                 //registerInBackground(Name, Password);
             }

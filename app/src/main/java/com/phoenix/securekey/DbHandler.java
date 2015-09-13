@@ -52,6 +52,27 @@ public class DbHandler {
         return vaultList;
     }
 
+    public static List<Vault> readfromvaultwithKeyNumber(Context context){
+        List<Vault> vaultList = new ArrayList<>();
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.VAULT_URI),null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                Vault vault = new Vault();
+                vault.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+                vault.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_NAME)));
+                vault.setPasscode(cursor.getLong(cursor.getColumnIndex(DbTableStrings.VAULT_PASSWORD)));
+                vault.setIsSecure(cursor.getInt(cursor.getColumnIndex(DbTableStrings.IS_SECURE)));
+                vault.setKeyNumber((DbHandler.getPairsByvaultId(context,vault.getId()).size()));
+                vaultList.add(vault);
+            }while(cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return vaultList;
+    }
+
     public static List<KeyValue> getAllPairs(Context context){
         List<KeyValue> kvList = new ArrayList<>();
         ContentResolver contentResolver = context.getContentResolver();

@@ -30,7 +30,7 @@ public class VaultActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.activity_vault_list_view);
         vaultList=new ArrayList<>();
 
-       vaultList=DbHandler.readfromvault(getApplicationContext());
+       vaultList=DbHandler.readfromvaultwithKeyNumber(getApplicationContext());
 
         mAdapter = new VaultListAdapter(this, vaultList);
         mListView.setAdapter(mAdapter);
@@ -71,5 +71,11 @@ public class VaultActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetInvalidated();
     }
 }
