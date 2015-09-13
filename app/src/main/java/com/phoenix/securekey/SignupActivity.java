@@ -34,9 +34,9 @@ public class SignupActivity extends AppCompatActivity{
                 String confirmPassword=editTextConfirmPassword.getText().toString();
                 UserModel userModel=new UserModel();
 
-                if(userPassword!="" &&  userName!="" && confirmPassword!="")
+                if(!userPassword.matches("") &&  !userName.matches("") && !confirmPassword.matches(""))
                 {
-                    if(userPassword!=confirmPassword)
+                    if(!userPassword.equals(confirmPassword))
                     {
                         Toast.makeText(getApplicationContext(),"Password doesn't Match ",Toast.LENGTH_LONG).show();
                     }
@@ -44,8 +44,8 @@ public class SignupActivity extends AppCompatActivity{
                     {
                         userModel.UserName=userName;
                         userModel.Password=Integer.parseInt(userPassword);
-                        //save data
 
+                        DbHandler.insertUser(getApplicationContext(),userModel);
                         Intent intent=new Intent(SignupActivity.this,VaultActivity.class);
                         startActivity(intent);
                         finish();

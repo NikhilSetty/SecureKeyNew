@@ -63,7 +63,7 @@ public class DbHandler {
                 vault.setName(cursor.getString(cursor.getColumnIndex(DbTableStrings.VAULT_NAME)));
                 vault.setPasscode(cursor.getLong(cursor.getColumnIndex(DbTableStrings.VAULT_PASSWORD)));
                 vault.setIsSecure(cursor.getInt(cursor.getColumnIndex(DbTableStrings.IS_SECURE)));
-                vault.setKeyNumber((DbHandler.getPairsByvaultId(context,vault.getId()).size()));
+                vault.setKeyNumber((DbHandler.getPairsByvaultId(context, vault.getId()).size()));
                 vaultList.add(vault);
             }while(cursor.moveToNext());
 
@@ -71,6 +71,24 @@ public class DbHandler {
         cursor.close();
 
         return vaultList;
+    }
+
+    public static boolean authUser(Context context,UserModel model){
+        List<UserModel> userList = new ArrayList<>();
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.AUTH_URI),null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                UserModel dmodel = new UserModel();
+                dmodel.UserName=cursor.getString(cursor.getColumnIndex(DbTableStrings.USERNAME));
+                dmodel.Password=cursor.getLong(cursor.getColumnIndex(DbTableStrings.PASSWORD));
+
+                if(model.Password==dmodel.Password && model.UserName.equals(dmodel.UserName))
+                    return true;
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return false;
     }
 
     public static List<KeyValue> getAllPairs(Context context){

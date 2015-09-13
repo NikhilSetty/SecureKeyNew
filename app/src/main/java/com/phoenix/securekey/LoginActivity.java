@@ -60,11 +60,20 @@ public class LoginActivity extends AppCompatActivity {
                 userName=name.getText().toString();
                 userPassword=password.getText().toString();
 
+                if(!userPassword.matches("")) {
+                    UserModel model = new UserModel();
+                    model.UserName = userName;
+                    model.Password = Long.parseLong(userPassword);
+                    if (DbHandler.authUser(getApplicationContext(), model)) {
+                        Intent intent = new Intent(LoginActivity.this, VaultActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else {
 
-
-                Intent intent = new Intent(LoginActivity.this, VaultActivity.class);
-                startActivity(intent);
-                finish();
+                    Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG).show();
+                }
 
                 //registerInBackground(Name, Password);
             }
