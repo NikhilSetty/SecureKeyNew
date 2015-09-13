@@ -51,8 +51,8 @@ public class AddVaultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String vaultName="";
                 int vaultPin;
-                vaultName=editTextName.getText().toString();
-                Vault vault=new Vault();
+                vaultName = editTextName.getText().toString();
+                Vault vault = new Vault();
 
                 if(!vaultName.matches(""))
                 {
@@ -62,8 +62,8 @@ public class AddVaultActivity extends AppCompatActivity {
                     if(checkBoxSetPassword.isChecked())
                     {
                         if(!editTextPassword.getText().toString().matches("")){
-                            vaultPin=Integer.parseInt(editTextPassword.getText().toString());
-                            vault.setPin(vaultPin);
+                            vaultPin = Integer.parseInt(editTextPassword.getText().toString());
+                            vault.setPasscode(vaultPin);
                             vault.setIsSecure(1);
                             DbHandler.insertVault(getApplicationContext(), vault);
                             Intent intent = new Intent(AddVaultActivity.this, VaultActivity.class);
@@ -74,7 +74,7 @@ public class AddVaultActivity extends AppCompatActivity {
 
                     }
                     else {
-                       vault.setPin(0);
+                       vault.setPasscode(0);
                         DbHandler.insertVault(getApplicationContext(), vault);
                         Intent intent = new Intent(AddVaultActivity.this, VaultActivity.class);
                         startActivity(intent);

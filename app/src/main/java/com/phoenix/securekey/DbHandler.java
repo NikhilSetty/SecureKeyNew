@@ -19,12 +19,12 @@ public class DbHandler {
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(Uri.parse(DbTableStrings.AUTH_URI),null,null,null,null);
         if(cursor.moveToFirst()){
-            while(cursor.moveToNext()) {
+             do {
                 UserModel user = new UserModel();
                 user.UserName = cursor.getString(cursor.getColumnIndex(DbTableStrings.USERNAME));
                 user.Password = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DbTableStrings.PASSWORD)));
                 userList.add(user);
-            }
+            }while(cursor.moveToNext());
 
         }
         cursor.close();
@@ -126,9 +126,8 @@ public class DbHandler {
         ContentResolver contentResolver = context.getContentResolver();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbTableStrings.VAULT_NAME, vault.getName());
-        if(vault.getPasscode()!='\0') {
-            contentValues.put(DbTableStrings.VAULT_PASSWORD, vault.getPasscode());
-        }
+        contentValues.put(DbTableStrings.IS_SECURE, vault.getIsSecure());
+        contentValues.put(DbTableStrings.VAULT_PASSWORD, vault.getPasscode());
         contentResolver.insert(Uri.parse(DbTableStrings.VAULT_URI), contentValues);
     }
 

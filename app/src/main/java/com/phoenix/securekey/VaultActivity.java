@@ -1,13 +1,19 @@
 package com.phoenix.securekey;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,9 +48,52 @@ public class VaultActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Toast.makeText(getApplicationContext(), "Item clicked " + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), KeyValueActivity.class);
-                intent.putExtra("vaultId",vaultList.get(position).getId());
-                startActivity(intent);
+
+                final Vault vault = vaultList.get(position);
+
+                if(vault.getIsSecure() == 1){
+                    LayoutInflater li = LayoutInflater.from(VaultActivity.this);
+                    View promptsView = li.inflate(R.layout.alert_vault_activity, null);
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VaultActivity.this);
+                    final EditText input = (EditText) promptsView.findViewById(R.id.editTextPassword);
+
+                    alertDialogBuilder.setView(promptsView);
+                    alertDialogBuilder.setMessage("Authenticate to SecureKey!");
+                    alertDialogBuilder.setPositiveButton("Login",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    String enteredPassword = input.getText().toString();
+                                    if (!enteredPassword.equals("") && enteredPassword.equals(Long.toString(vault.getPasscode()))) {
+                                        Toast.makeText(getApplicationContext(), "Vault Login Successful!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), KeyValueActivity.class);
+                                        intent.putExtra("vaultId", vault.getId());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Vault Login Failed, Try Again!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                    );
+
+                    alertDialogBuilder.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else {
+
+                    Intent intent = new Intent(getApplicationContext(), KeyValueActivity.class);
+                    intent.putExtra("vaultId", vaultList.get(position).getId());
+                    startActivity(intent);
+                }
             }
         });
     }
