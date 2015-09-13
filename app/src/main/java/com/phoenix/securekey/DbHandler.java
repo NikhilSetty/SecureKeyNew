@@ -1,6 +1,7 @@
 package com.phoenix.securekey;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -69,4 +70,36 @@ public class DbHandler {
 
         return kvList;
     }
+
+    public static void insertUser(Context context,UserModel model){
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbTableStrings.USERNAME, model.UserName);
+        contentValues.put(DbTableStrings.PASSWORD, model.Password);
+        contentResolver.insert(Uri.parse(DbTableStrings.AUTH_URI), contentValues);
+    }
+
+
+    public static void insertVault(Context context,Vault vault)
+    {
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbTableStrings.VAULT_NAME, vault.getName());
+        if(vault.getPasscode()!='\0') {
+            contentValues.put(DbTableStrings.VAULT_PASSWORD, vault.getPasscode());
+        }
+        contentResolver.insert(Uri.parse(DbTableStrings.VAULT_URI), contentValues);
+    }
+
+    public static void insertKeyValue(Context context,KeyValue kv)
+    {
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DbTableStrings.KEY, kv.getName());
+            contentValues.put(DbTableStrings.VALUE, kv.getValue());
+        contentValues.put(DbTableStrings.VAULT_ID, kv.getVaultId());
+        contentResolver.insert(Uri.parse(DbTableStrings.DATA_URI), contentValues);
+    }
+
 }

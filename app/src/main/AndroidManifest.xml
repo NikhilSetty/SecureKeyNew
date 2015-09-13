@@ -50,6 +50,9 @@
         <activity android:name=".SignupActivity"
             android:label="SignUp">
         </activity>
+        <activity android:name=".AddKeyValueActivity"
+            android:label="Add KeyValue">
+        </activity>
         <provider android:name=".SecureProvider"
             android:authorities="com.phoenix.securekey.SecureProvider">
             </provider>

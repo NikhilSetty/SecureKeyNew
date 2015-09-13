@@ -30,17 +30,7 @@ public class VaultActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.activity_vault_list_view);
         vaultList=new ArrayList<>();
 
-        //dummy data
-        Vault vault1=new Vault();
-        vault1.setKeyNumber(23);
-        vault1.setName("HDFC");
-
-        Vault vault=new Vault();
-        vault.setKeyNumber(2);
-        vault.setName("Address");
-
-        vaultList.add(vault);
-        vaultList.add(vault1);
+       vaultList=DbHandler.readfromvault(getApplicationContext());
 
         mAdapter = new VaultListAdapter(this, vaultList);
         mListView.setAdapter(mAdapter);
@@ -52,8 +42,8 @@ public class VaultActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Toast.makeText(getApplicationContext(), "Item clicked " + position, Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(VaultActivity.this, KeyValueActivity.class);
+                Intent intent = new Intent(getApplicationContext(), KeyValueActivity.class);
+                intent.putExtra("vaultId",vaultList.get(position).getId());
                 startActivity(intent);
             }
         });

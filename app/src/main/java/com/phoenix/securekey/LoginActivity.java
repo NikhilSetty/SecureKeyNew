@@ -55,6 +55,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String userName="";
+                String userPassword="";
+                userName=name.getText().toString();
+                userPassword=password.getText().toString();
+
+
 
                 Intent intent = new Intent(LoginActivity.this, VaultActivity.class);
                 startActivity(intent);
@@ -140,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
         }.execute(null, null, null);
     }
 
-    // When Application is resumed, check for Play services support to make sure app will be running normally
+
     @Override
     protected void onResume() {
         super.onResume();
