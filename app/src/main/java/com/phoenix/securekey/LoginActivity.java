@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.Key;
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -39,13 +40,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         applicationContext=getApplicationContext();
 
-        name=(EditText)findViewById(R.id.edittext_name);
-        password=(EditText)findViewById(R.id.edittext_password);
-        loginButton=(Button)findViewById(R.id.btn_login);
-        Name=name.getText().toString();
-        Password=password.getText().toString();
-        signupButton=(TextView)findViewById(R.id.link_signup);
+        name = (EditText)findViewById(R.id.edittext_name);
+        password = (EditText)findViewById(R.id.edittext_password);
+        loginButton = (Button)findViewById(R.id.btn_login);
+        Name = name.getText().toString();
+        Password = password.getText().toString();
+        signupButton = (TextView)findViewById(R.id.link_signup);
         signupButton.setClickable(true);
+
+        List<UserModel> userModel = DbHandler.readUserData(getApplicationContext());
+        if(userModel != null && userModel.size() >= 1){
+            signupButton.setVisibility(View.INVISIBLE);
+        }
 
         //insertdata();
 

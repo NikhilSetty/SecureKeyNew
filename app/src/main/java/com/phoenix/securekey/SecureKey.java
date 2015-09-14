@@ -194,7 +194,10 @@ public class SecureKey extends InputMethodService
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                                 String enteredPassword = input.getText().toString();
-                                if (!enteredPassword.equals("") && enteredPassword.equals(Long.toString(1234))) {
+                                UserModel user = new UserModel();
+                                user.UserName = "";
+                                user.Password = Long.parseLong(input.getText().toString());
+                                if (!enteredPassword.equals("") && DbHandler.authUser(getApplicationContext(), user)) {
                                     Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
                                     AddKey();
                                 } else {
