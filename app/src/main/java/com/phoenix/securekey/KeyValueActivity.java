@@ -1,15 +1,24 @@
 package com.phoenix.securekey;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +47,10 @@ public class KeyValueActivity extends AppCompatActivity {
     {
         mListView = (ListView) findViewById(R.id.activity_vault_list_view);
         list2=(ListView)findViewById(R.id.list1);
-        keyList=new ArrayList<>();
-        keyList=DbHandler.getPairsByvaultId(getApplicationContext(),vaultId);
+        keyList = new ArrayList<>();
+        keyList = DbHandler.getPairsByvaultId(getApplicationContext(), vaultId);
 
-        List<String> kList=new ArrayList<>();
+        final List<String> kList = new ArrayList<>();
         int i=0;
         for(KeyValue key:keyList){
             kList.add(key.getName());
@@ -49,6 +58,36 @@ public class KeyValueActivity extends AppCompatActivity {
 
         mAdapter = new ArrayAdapter<String>(KeyValueActivity.this,android.R.layout.simple_list_item_1,kList);
         list2.setAdapter(mAdapter);
+
+        list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final KeyValue keyValuePair = keyList.get(position);
+                LayoutInflater li = LayoutInflater.from(KeyValueActivity.this);
+                View promptsView = li.inflate(R.layout.alert_view_key, null);
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KeyValueActivity.this);
+                final TextView textViewKey = (TextView) promptsView.findViewById(R.id.textViewKey);
+                final TextView textViewValue = (TextView) promptsView.findViewById(R.id.textViewValue);
+
+                textViewKey.setText("Key : " + keyValuePair.getName());
+                textViewValue.setText("Value : " + keyValuePair.getValue());
+                alertDialogBuilder.setView(promptsView);
+                alertDialogBuilder.setMessage("Your Key!");
+                alertDialogBuilder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int arg1) {
+                            dialog.dismiss();
+                        }
+                    }
+                );
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+
+        });
     }
 
     @Override
