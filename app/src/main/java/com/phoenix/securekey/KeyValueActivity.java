@@ -1,6 +1,5 @@
 package com.phoenix.securekey;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,13 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import java.security.Key;
+import com.phoenix.securekey.Model.KeyValue;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -10,6 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.phoenix.securekey.Model.Vault;
+
 /**
  * Created by anujkumars on 9/12/2015.
  */

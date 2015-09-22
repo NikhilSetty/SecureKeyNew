@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.phoenix.securekey.Model.Vault;
+
 import java.util.List;
 
 /**

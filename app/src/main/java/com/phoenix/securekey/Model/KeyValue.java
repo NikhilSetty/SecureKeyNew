@@ -1,4 +1,4 @@
-package com.phoenix.securekey;
+package com.phoenix.securekey.Model;
 
 /**
  * Created by anujkumars on 9/12/2015.

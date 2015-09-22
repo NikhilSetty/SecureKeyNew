@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.phoenix.securekey.Model.UserModel;
 
 /**
  * Created by anujkumars on 9/12/2015.

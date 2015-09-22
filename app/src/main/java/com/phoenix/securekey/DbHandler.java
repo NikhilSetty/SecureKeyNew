@@ -6,6 +6,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.phoenix.securekey.Model.KeyValue;
+import com.phoenix.securekey.Model.UserModel;
+import com.phoenix.securekey.Model.Vault;
+
 import java.util.ArrayList;
 import java.util.List;
 

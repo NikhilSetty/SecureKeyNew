@@ -1,16 +1,15 @@
 package com.phoenix.securekey;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.phoenix.securekey.R;
+import com.phoenix.securekey.Model.KeyValue;
+import com.phoenix.securekey.Model.Vault;
 
 import java.util.ArrayList;
 
