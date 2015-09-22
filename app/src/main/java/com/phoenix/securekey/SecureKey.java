@@ -242,7 +242,7 @@ public class SecureKey extends InputMethodService
         final List<Vault> vaults = DbHandler.readfromvault(getApplicationContext());
         String[] VaultNames = new String[vaults.size()];
         for(int i = 0; i < vaults.size(); i++){
-            VaultNames[i] = vaults.get(i).Name;
+            VaultNames[i] = vaults.get(i).getName();
         }
 
         /*String[] vaults = new String[]{"Hello", "How", "are", "you"};*/
@@ -383,7 +383,7 @@ public class SecureKey extends InputMethodService
                     alertDialog.show();
                 }
 
-                Toast.makeText(getApplicationContext(), "You have clicked :" + selectedVault.Name, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have clicked :" + selectedVault.getName(), Toast.LENGTH_LONG).show();
                 //String[] vaults = new String[]{"New", "Set", "Of", "Strings"};
 
                 final List<KeyValue> kv = DbHandler.getAllPairs(getApplicationContext());
