@@ -40,11 +40,19 @@ public class SecureKey extends InputMethodService
 
     private boolean caps = false;
 
+    Keyboard qwertyKeyboard;
+    Keyboard symbolsKeyboard;
+    Keyboard symbolsShiftKeyboard;
+
     @Override
     public View onCreateInputView() {
+        qwertyKeyboard = new Keyboard(this, R.xml.qwerty);
+        symbolsKeyboard = new Keyboard(this, R.xml.symbols);
+        symbolsShiftKeyboard = new Keyboard(this, R.xml.symbols_shift);
+
         li = LayoutInflater.from(this);
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this, R.xml.qwerty);
+        keyboard = qwertyKeyboard;
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;
@@ -58,9 +66,14 @@ public class SecureKey extends InputMethodService
                 ic.deleteSurroundingText(1, 0);
                 break;
             case Keyboard.KEYCODE_SHIFT:
-                caps = !caps;
-                keyboard.setShifted(caps);
-                kv.invalidateAllKeys();
+                Keyboard currentKeyboard = kv.getKeyboard();
+                if(currentKeyboard == symbolsKeyboard || currentKeyboard == symbolsShiftKeyboard){
+                    HandleShift(true);
+                }else {
+                    caps = !caps;
+                    keyboard.setShifted(caps);
+                    kv.invalidateAllKeys();
+                }
                 break;
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
@@ -77,12 +90,44 @@ public class SecureKey extends InputMethodService
             case -50:
                 NewTest();
                 break;
+            case Keyboard.KEYCODE_MODE_CHANGE:
+                HandleShift(false);
+                break;
             default:
                 char code = (char)primaryCode;
                 if(Character.isLetter(code) && caps){
                     code = Character.toUpperCase(code);
                 }
                 ic.commitText(String.valueOf(code),1);
+        }
+    }
+
+    private void HandleShift(boolean shiftToSymbols) {
+        Keyboard currentKeyboard = kv.getKeyboard();
+
+        if(shiftToSymbols){
+            kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
+            if(currentKeyboard == symbolsShiftKeyboard){
+                keyboard = symbolsKeyboard;
+            }else {
+                keyboard = symbolsShiftKeyboard;
+            }
+            kv.setKeyboard(keyboard);
+            kv.setOnKeyboardActionListener(this);
+            setInputView(kv);
+        }
+        else if(currentKeyboard == qwertyKeyboard) {
+            kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
+            keyboard = symbolsKeyboard;
+            kv.setKeyboard(keyboard);
+            kv.setOnKeyboardActionListener(this);
+            setInputView(kv);
+        }else if(currentKeyboard == symbolsKeyboard){
+            kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
+            keyboard = qwertyKeyboard;
+            kv.setKeyboard(keyboard);
+            kv.setOnKeyboardActionListener(this);
+            setInputView(kv);
         }
     }
 
